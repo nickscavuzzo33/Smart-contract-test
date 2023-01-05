@@ -1,0 +1,25 @@
+pragma solidity ^0.7.0;
+
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/MyContract.sol";
+
+contract TestMyContract {
+  // Declare a reference to the contract we will be testing
+  MyContract myContract = MyContract(DeployedAddresses.MyContract());
+
+  // Define a test case for the function `setValue`
+  function testSetValue() public {
+    // Assign an initial value to a storage variable in the contract
+    uint256 initialValue = myContract.value();
+
+    // Call the `setValue` function and pass in a new value
+    myContract.setValue(12345);
+
+    // Retrieve the updated value from storage
+    uint256 updatedValue = myContract.value();
+
+    // Verify that the value has been updated as expected
+    Assert.equal(updatedValue, 12345, "The value was not set correctly.");
+  }
+}
